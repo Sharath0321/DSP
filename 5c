@@ -1,0 +1,10 @@
+xn=input('Enter the sequence x =');
+N=length(xn);
+Xk=dft(xn)
+l=2; 
+j=sqrt(-1);
+n=0:N-1
+yn=xn.*exp(j*2*pi*l*n/N)
+Yk=dft(yn)
+Yk1=circshift(Xk,l)
+￼Enter
