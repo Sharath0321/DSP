@@ -1,0 +1,58 @@
+fc= 1000;
+Fs =10000;
+N =100;
+wn=(2*fc)/Fs;
+b=fir1(N,wn,'high',hamming(N + 1));
+disp('Filter Coefficients:');
+disp(b);
+freqz(b,1);
+t=0:1/Fs:1; 
+fm=100; 
+input=sin(2*pi*fm*t);
+filtered=filter(b,1,input);
+figure;
+subplot(2,1,1);
+plot(t,input);
+title('Original Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+subplot(2,1,2);
+plot(t,filtered);
+title('Filtered Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+STEPS FOR EXECUTION OF CODE COMPOSER STUDIO SOFTWARE
+
+Go to file select new & click on target configure file.
+Save the file with .ccxml extension &click on finish.
+In basic tab select the connection as ‘Instruments XDS100vl USB debug probe’.
+Select the board/device as’ TMS320C6747’
+Save the configuration.
+Click on advance tab & click on the cpu &select browse in C-drive to select the L138 support folder & save the gel file & save it.
+Go to view select target configuration and expand user defined folder & right click the file & select launch configuration.
+Debug tab will pop up then right click the device & select connect target.
+Next, Go to file >New>Project>CCS Project.
+Go to C-drive L138 support folder select folder, select the linker_dsp file & add it in the linker command file, click on finish.
+Type the program in the editor window & save it.
+Go to project tab &select build Project.
+Go to Run>Load program then browse project & select your project &click on ok.
+Go to run & Navigate Resume.
+￼Enter
