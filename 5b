@@ -1,0 +1,26 @@
+xn=input('Enter the sequence xn =');
+N=length(xn);
+l=2;
+X=fft(xn)
+x_shifted=circshift(xn,l)
+X_shifted=fft(x_shifted)
+
+% Compute the phase shift in the frequency domain
+j=sqrt(-1);
+k=0:N-1
+phase_shift=exp(-j*2*pi*k*l/N)
+Y=X.*phase_shift
+
+disp('Circular time Shift Property Verification:');
+disp('====================================');
+disp('Original Signal: x =');
+disp(xn);
+disp('Circularly Shifted Signal: x_shifted =');
+disp(x_shifted);
+disp('DFT of Original Signal: X =');
+disp(X);
+disp('DFT of Circularly Shifted Signal: X_shifted =');
+disp(X_shifted);
+disp('Phase Shift in Frequency Domain: phase_shift =');
+disp(phase_shift);
+￼Enter
