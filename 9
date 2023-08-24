@@ -1,0 +1,51 @@
+clc;
+clear all;
+close all;
+Fpa=input('Enter passband edge frequency in Hz');
+Fsa= input('Enter stopband edge frequency in Hz');
+Fs1= input('Enter sampling frequency in Hz');
+% Calculate transition BW tb, order of the filter
+
+wpd=2*pi*Fpa/Fs1;
+wsd=2*pi*Fsa/Fs1;
+tb=wsd-wpd;
+N=ceil(6.6*pi/tb)
+Wc=(wsd+wpd)/2
+%compute the normalized cut off frequency
+wc=Wc/pi
+fc=wc*Fs1/2
+%calculate &amp; plot the window
+hw=hamming(N+1);
+figure (1)
+datacursormode on
+stem(hw);
+title('Fir filter window sequence- hamming window');
+%find h(n) using FIR
+h=fir1(N,wc,hw);
+%plot the frequency response
+figure(2);
+[m,w]=freqz(h,1,128);
+mag=20*log10(abs(m));
+datacursormode on
+plot(Fs1*w/(2*pi),mag);
+title('Fir filter frequency response');
+grid;
+%generate simulated input of 50, 300 &amp; 200 Hz, each of 30 points
+n=1:30;
+f1=50;f2=300;f3=200;fs=1000;
+%f1=150; f2=300;f3=170;fs=1000;
+x1=sin(2*pi*n*fi1/fs);
+x2=sin(2*pi*n*f2/fs);
+x3=sin(2*pi*n*f3/fs);
+x=[x1 x2 x3];
+figure (3)
+datacursormode on
+subplot(2,1,1);
+stem(x);
+title('input-f1=150;f2=300;f3=170;fs=1000');
+y=filter(h,1,x);
+datacursormode on
+subplot(2,1,2);
+stem(y);
+title('output with cutoff freq fc=150Hz');
+￼Enter
