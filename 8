@@ -1,0 +1,28 @@
+fp=input('enter the pass band frequency:'); %800
+fs=input('enter the stop band frequency:'); %500
+K1=input('enter the pass band ripple:'); %3;
+K2=input('enter the stop band ripple:'); %20
+Fs=input('enter the sampling frequency:'); %8000
+FN=Fs/2;
+wp=2*fp/Fs;
+ws=2*fs/Fs;
+%Designing of high pass Butterworth Filter
+[n,wc]=buttord(wp,ws,K1,K2);
+[b1,a1]=butter(n,wc,'high');
+w=0:0.01:pi;
+[h,om]=freqz(b1,a1,w);
+m=20*log(abs(h));
+an=angle(h);
+figure(1);
+subplot(2,1,1);
+plot(om/pi,m);
+grid on;
+xlabel('Normalized frequency--->');
+ylabel('Gain in dB--->');
+subplot(2,1,2);
+plot(om/pi,an);
+grid on;
+xlabel('Normalized frequency--->');
+ylabel('Phase angle in Radians--->');
+
+￼Enter
