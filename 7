@@ -1,0 +1,110 @@
+clc;
+clear all;
+close all;
+wp=input('Enter the passband edge frequency of analog filter in rad/sec');
+ws=input('Enter the stop band edge frequency of analog filter in rad/sec');
+K1=input('Enter the passband gain in dB');
+K2=input('Enter the stop band attenuation in dB');
+[N,wc]=buttord(wp,ws,K1,K2,'s');
+disp('The cut off Frequecy:');
+
+disp(wc)
+disp('The order of the filter')
+disp(N);
+[b a]=butter(N,wc,'s');
+disp('The numerator coefficients of analog Butterworth filter:')
+disp(b)
+disp('The denominator coefficients of analog Butterworth filter:')
+disp(a)
+[Ha,Wa]=freqs(b,a,1024)
+figure(1)
+plot(Wa, 20*log10(abs(Ha)))
+datacursormode on;
+grid on;
+title('Magnitude Frequency Response of analog Butterworth filter')
+xlabel('Frequency in rad/sec')
+ylabel('Magnitude in dB ')
+
+% DESIGN THE DIGITAL IIR LPF USING BILINEAR TRANSFORMATION METHOD
+[Num,Den]=bilinear(b,a,1);
+disp('The numerator coefficients of digital Butterworth filter:')
+disp(Num)
+disp('The denominator coefficients of digital Butterworth filter:')
+disp(Den)
+[Hd,Wd]=freqz(Num,Den,1024,10)
+figure(2)
+datacursormode on;
+grid on;
+plot(Wd, 20*log10(abs(Hd)))
+title('Magnitude Frequency Response of digital Butterworth filter')
+xlabel('Frequency in rad/sec')
+ylabel('Magnitude in dB');
+II) %BUTTERWORTH FILTER: GIVEN DATA: K1=1DB, K2=40DB, W1=800RAD/SEC, W2=1200RAD/SEC,WS=3600RAD/SEC;
+K1=1;
+K2=40;
+w1=800;
+w2=1200;
+ws=3600;
+% Analog frequency
+aw1= 2*pi*w1/ws;
+aw2= 2*pi*w2/ws;
+
+% Prewarped frequency
+pw1 = 2*tan(aw1/2);
+pw2 = 2*tan(aw2/2);
+%Calculate the order and cutoff frequency
+[N,wc]= buttord(pw1,pw2,K1,K2,'s');
+% analog filter transfer function
+[b,a] = butter(N,wc,'s');
+% obtaining the digital filter using bilinear transformation
+fs=1;
+[num,den]=bilinear(b,a,fs);
+%plot the frequency response
+[mag,freq1]=freqz(num,den,128);
+freq=freq1*ws/(2*pi);
+m=20*log10(abs(mag));
+datacursormode on;
+plot(freq, m);
+grid on;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+III) %GENERATE FILTER COEFFICIENTS FOR THE GIVEN %ORDER &AMP; CUT OFF; SAY N=2, FC=150HZ, FS=1000 HZ,BUTTERWORTH FILTER
+
+[b,a]=butter(2, 150/(1000/2));
+fvtool(b,a)
+n=1:30;
+f1=100;
+f2=300;
+f3=170;
+fs=1000;
+x1=sin(2*pi*n*f1/fs);
+x2=sin(2*pi*n*fi2/fs);
+x3=sin(2*pi*n*f3/fs);
+x=[x1 x2 x3];
+datacursormode on
+subplot(2,1,1);
+stem(x);
+title(‘Input’);
+y=filter(b,a,x);
+datacursormode on
+subplot(2,1,2);
+stem(y);
+title(‘Filtered output’);
