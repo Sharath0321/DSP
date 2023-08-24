@@ -1,0 +1,65 @@
+FUNCTION FILE : (save the file name as circn.m)
+function y=circn(x,h)
+N=max(length(x),length(h))
+if(length(x)<N)
+x=[x zeros(1,N-length(x))]
+elseif (length(h)<N)
+h=[h zeros(1,N-length(h))]
+end
+%compute the output
+for n=0:N-1
+y(n+1)=0;
+for k=0:N-1
+i=mod((n-k),N); %calculation of x index
+if i<0
+i=i+N;
+end %end of ‘if’
+y(n+1)=y(n+1)+h(k+1)*x(i+1);
+end %end of inner ‘for loop’
+end %end of outer ‘for loop’
+
+MAIN FILE:
+% COMMUTATIVE, ASSOCIATIVE AND DISTRIBUTIVE PROPERTIES OF CIRCULAR CONVOLUTION
+clc; 
+clear all; 
+close all;
+x1=input('enter first sequence x1=');
+x2=input('enter second sequence x2=');
+x3=input('enter third sequence x3=');
+% COMMUTATIVE PROPERTY OF CIRCULAR CONVOLUTION
+y=circn(x1,x2)
+disp('circular convolution of x1&x2 is y=');
+disp(y)
+y1=circn(x2,x1)
+disp('circular convolution of x2 & x1 is y1=');
+disp(y1)
+% y=y1 implies commutative property holds good
+
+%ASSOCIATIVE PROPERTY OF CIRCULAR CONVOLUTION
+y2=circn(y,x3)
+disp('circular convolution (x1*x2)*x3 is y2=');
+disp(y2)
+y3=circn(x2,x3)
+y4=circn(x1,y3)
+disp('circular convolution x1*(x2*x3) is y4=');
+disp(y4)
+%y3=y4 IMPLIES ASSOCIATIVE PROPERTY (x1*x2)*x3=x1*(x2*x3) HOLDS GOOD
+
+% DISTRIBUTIVE PROPERTY OF CIRCULAR CONVOLUTION
+N=max(length(x2),length(x3))
+if(length(x2)<N)
+x2=[x2 zeros(1,N-length(x2))]
+elseif (length(x3)<N)
+x3=[x3 zeros(1,N-length(x3))]
+end
+d=x2+x3
+y5=circn(x1,d)
+disp('circular convolution x1*(x2+x3) is y5=');
+disp(y5)
+e=circn(x1,x2)
+f=circn(x1,x3)
+y6=e+f
+disp('circular convolution x1*x2+x1*x3 is y6=');
+disp(y6)
+%y5=y6 IMPLIES DISTRIBUTIVE PROPERTY x1*(x2+x3)=x1*x2+x1*x3 HOLDS GOOD
+￼Enter
