@@ -1,0 +1,31 @@
+CODE:
+clc;
+close all;
+clear all;
+x = input('Enter the first sequence x: ');
+h = input('Enter the second sequence h: ');
+
+% LENGTH OF THE SEQUENCES
+N = length(x);
+
+% PERFORM ZERO-PADDING TO MAKE BOTH SEQUENCES OF EQUAL LENGTH
+if length(h) < N
+    h = [h zeros(1, N - length(h))];
+elseif length(h) > N
+    x = [x zeros(1, length(h) - N)];
+end
+
+% COMPUTE THE DFT OF THE SEQUENCES
+X = fft(x)
+H = fft(h)
+
+% COMPUTE THE CIRCULAR CONVOLUTION IN THE FREQUENCY DOMAIN
+Y = X .* H
+
+% COMPUTE THE INVERSE DFT TO OBTAIN THE CIRCULAR CONVOLUTION IN THE TIME DOMAIN
+y = ifft(Y)
+
+% DISPLAY THE CIRCULAR CONVOLUTION
+disp('Circular Convolution:');
+disp(y);
+￼Enter
