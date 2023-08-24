@@ -1,0 +1,19 @@
+clc; 
+clear all; 
+close all;
+
+x1n = input('Enter the sequence x1 =');
+x2n = input('Enter the sequence x2 =');
+a=input('Enter the scalar quantity with which x1 need to be multiplied ='); 
+b=input('Enter the scalar quantity with which x2 need to be multiplied ='); 
+N=length(x1n)
+n = 0:N-1
+X1k = fft(x1n)
+X2k = fft(x2n)
+ax1n=a*x1n
+aX1k=fft(ax1n)
+bx2n=b*x2n
+bX2k=fft(bx2n)
+g1=(ax1n+bx2n)
+G1=fft(g1)
+G2=aX1k+bX2k
